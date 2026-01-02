@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/parking-lots', require('./routes/parkingLots'));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
