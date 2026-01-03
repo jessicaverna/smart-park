@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import UserDashboard from './pages/UserDashboard';
+import LotDetailView from './pages/LotDetailView';
 import AdminDashboard from './pages/AdminDashboard';
 import './App.css';
 
@@ -45,6 +46,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <UserDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/lot/:lotId"
+        element={
+          <ProtectedRoute>
+            <LotDetailView />
           </ProtectedRoute>
         }
       />
