@@ -13,6 +13,9 @@ function AdminDashboard() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingLot, setEditingLot] = useState(null);
   const [formData, setFormData] = useState({ name: '', location: '', totalCapacity: '' });
+  const [selectedLot, setSelectedLot] = useState(null);
+  const [slots, setSlots] = useState([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -84,6 +87,41 @@ function AdminDashboard() {
   const cancelEdit = () => {
     setEditingLot(null);
     setFormData({ name: '', location: '', totalCapacity: '' });
+  };
+
+  const fetchSlots = async (lotId) => {
+    setLoadingSlots(true);
+    try {
+      const response = await api.get(`/slots/lot/${lotId}`);
+      setSlots(response.data.data.slots);
+      setSelectedLot(lotId);
+      setError('');
+    } catch (err) {
+      setError('Failed to load parking slots');
+    } finally {
+      setLoadingSlots(false);
+    }
+  };
+
+  const handleUpdateSlotStatus = async (slotId, newStatus) => {
+    try {
+      await api.put(`/slots/${slotId}`, { status: newStatus });
+      setSuccess('Slot status updated successfully');
+      fetchSlots(selectedLot);
+    } catch (err) {
+      setError('Failed to update slot status');
+    }
+  };
+
+  const handleSimulateIoT = async () => {
+    if (!selectedLot) return;
+    try {
+      await api.post(`/slots/simulate/${selectedLot}`);
+      setSuccess('IoT simulation completed');
+      fetchSlots(selectedLot);
+    } catch (err) {
+      setError('Failed to simulate IoT');
+    }
   };
 
   if (loading) {
@@ -233,8 +271,53 @@ function AdminDashboard() {
 
         {activeTab === 'slots' && (
           <div className="tab-content">
-            <h2>Manage Parking Slots</h2>
-            <p>Select a parking lot to manage its slots.</p>
+            <div className="section-header">
+              <h2>Manage Parking Slots</h2>
+              {selectedLot && (
+                <button className="btn-simulate" onClick={handleSimulateIoT}>
+                  Simulate IoT Sensor
+                </button>
+              )}
+            </div>
+
+            <div className="lot-selector">
+              <label>Select Parking Lot:</label>
+              <select
+                value={selectedLot || ''}
+                onChange={(e) => fetchSlots(e.target.value)}
+              >
+                <option value="">-- Choose a parking lot --</option>
+                {parkingLots.map((lot) => (
+                  <option key={lot.id} value={lot.id}>
+                    {lot.name} - {lot.location}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {loadingSlots && <p>Loading slots...</p>}
+
+            {selectedLot && !loadingSlots && (
+              <div className="slots-management">
+                <div className="slots-grid-admin">
+                  {slots.map((slot) => (
+                    <div key={slot._id} className={`slot-card-admin ${slot.status.toLowerCase()}`}>
+                      <div className="slot-number">{slot.spotNumber}</div>
+                      <div className="slot-status">{slot.status}</div>
+                      <select
+                        value={slot.status}
+                        onChange={(e) => handleUpdateSlotStatus(slot._id, e.target.value)}
+                        className="status-select"
+                      >
+                        <option value="AVAILABLE">Available</option>
+                        <option value="OCCUPIED">Occupied</option>
+                        <option value="RESERVED">Reserved</option>
+                      </select>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

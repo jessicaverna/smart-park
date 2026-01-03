@@ -193,3 +193,76 @@ td input {
 .btn-cancel:hover {
   background: #757575;
 }
+
+.btn-simulate {
+  padding: 10px 20px;
+  background: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-simulate:hover {
+  background: #f57c00;
+}
+
+.lot-selector {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.lot-selector label {
+  font-weight: 600;
+  color: #333;
+}
+
+.lot-selector select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  min-width: 300px;
+}
+
+.slots-grid-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.slot-card-admin {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  border: 3px solid;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slot-card-admin.available {
+  border-color: #4caf50;
+  background: #e8f5e9;
+}
+
+.slot-card-admin.occupied {
+  border-color: #f44336;
+  background: #ffebee;
+}
+
+.slot-card-admin.reserved {
+  border-color: #ff9800;
+  background: #fff3e0;
+}
+
+.status-select {
+  margin-top: 10px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 13px;
+}

@@ -69,12 +69,6 @@ function Login() {
         <p className="auth-link">
           Don't have an account? <Link to="/register">Register here</Link>
         </p>
-
-        <div className="demo-credentials">
-          <p><strong>Demo Credentials:</strong></p>
-          <p>Admin: admin@smartpark.com / admin123</p>
-          <p>User: john@example.com / user123</p>
-        </div>
       </div>
     </div>
   );
