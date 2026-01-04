@@ -101,9 +101,30 @@ exports.createParkingLot = async (req, res) => {
       description
     });
 
+    // Auto-generate parking slots based on totalCapacity
+    const slots = [];
+    const prefix = name.charAt(name.indexOf('Mall') + 5); // Get letter after 'Mall ' (e.g., 'A', 'B', 'C')
+    const availableRatio = 0.67; // 67% available, 33% occupied
+    const availableCount = Math.floor(totalCapacity * availableRatio);
+
+    for (let i = 1; i <= totalCapacity; i++) {
+      const spotNumber = `${prefix}${i}`;
+      const status = i <= availableCount ? 'AVAILABLE' : 'OCCUPIED';
+
+      slots.push({
+        parkingLot: parkingLot._id,
+        spotNumber: spotNumber,
+        status: status,
+        floor: location.includes('Floor') ? location.split(',')[0].trim() : 'Ground Floor',
+        section: prefix
+      });
+    }
+
+    await ParkingSpot.insertMany(slots);
+
     res.status(201).json({
       success: true,
-      message: 'Parking lot created successfully',
+      message: 'Parking lot created successfully with auto-generated slots',
       data: parkingLot
     });
   } catch (error) {

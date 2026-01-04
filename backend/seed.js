@@ -60,7 +60,7 @@ const seedData = async () => {
     const lot1 = await ParkingLot.create({
       name: 'Mall A - Floor 1',
       location: 'Ground Floor, Mall A',
-      totalCapacity: 20,
+      totalCapacity: 15,
       description: 'Main parking area on ground floor'
     });
 
@@ -77,7 +77,7 @@ const seedData = async () => {
     console.log('Creating parking spots for Mall A - Floor 1...');
     const lot1Spots = [];
 
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 15; i++) {
       const spotNumber = `A${i}`;
       const status = i <= 5 ? 'OCCUPIED' : 'AVAILABLE'; // First 5 occupied, rest available
 
