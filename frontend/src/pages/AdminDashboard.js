@@ -180,6 +180,8 @@ function AdminDashboard() {
                   placeholder="Parking Lot Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  minLength="3"
+                  maxLength="50"
                   required
                 />
                 <input
@@ -187,13 +189,17 @@ function AdminDashboard() {
                   placeholder="Location"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  minLength="5"
+                  maxLength="100"
                   required
                 />
                 <input
                   type="number"
-                  placeholder="Total Capacity"
+                  placeholder="Total Capacity (10-15)"
                   value={formData.totalCapacity}
                   onChange={(e) => setFormData({ ...formData, totalCapacity: e.target.value })}
+                  min="10"
+                  max="15"
                   required
                 />
                 <button type="submit" className="btn-submit">Add Parking Lot</button>
