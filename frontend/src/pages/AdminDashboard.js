@@ -105,7 +105,7 @@ function AdminDashboard() {
 
   const handleUpdateSlotStatus = async (slotId, newStatus) => {
     try {
-      await api.put(`/slots/${slotId}`, { status: newStatus });
+      await api.put(`/slots/${slotId}/status`, { status: newStatus });
       setSuccess('Slot status updated successfully');
       fetchSlots(selectedLot);
     } catch (err) {
