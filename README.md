@@ -8,7 +8,6 @@ A web application for managing parking lots. Built with React, Express, Node.js,
 - Admin can manage parking lots and slots
 - Slot status simulation for testing
 - Users can view available parking spaces
-- Real-time availability display
 
 ## Tech Stack
 
