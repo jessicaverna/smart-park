@@ -14,8 +14,6 @@ function LotDetailView() {
 
   useEffect(() => {
     fetchLotDetails();
-    const interval = setInterval(fetchLotDetails, 10000); // Refresh every 10 seconds
-    return () => clearInterval(interval);
   }, [lotId]);
 
   const fetchLotDetails = async () => {
@@ -117,8 +115,6 @@ function LotDetailView() {
             <span>Reserved</span>
           </div>
         </div>
-
-        <p className="auto-refresh">Auto-refreshing every 10 seconds...</p>
       </div>
     </div>
   );
