@@ -64,13 +64,10 @@ function UserDashboard() {
                 <p className="location">{lot.location}</p>
 
                 <div className="availability">
-                  <div className="available-count">
-                    <span className="number">{lot.availableSlots}</span>
-                    <span className="label">Available</span>
-                  </div>
-                  <div className="total-count">
-                    <span className="number">{lot.totalCapacity}</span>
-                    <span className="label">Total</span>
+                  <div className="available-format">
+                    <span className="availability-text">
+                      {lot.availableSlots}/{lot.totalCapacity} available
+                    </span>
                   </div>
                 </div>
 
